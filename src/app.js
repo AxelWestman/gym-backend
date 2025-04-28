@@ -5,6 +5,7 @@ const cors = require('cors') ;
 const path = require('path');
 var app = express();
 const bodyParser = require('body-parser');
+var usuarios_routes = require('./routes/usuarios'   );
 
 app.use(morgan('dev')) 
 
@@ -29,7 +30,15 @@ app.listen(port,() => {
     console.log("port ==> ", port);
 });
 
-//middlewares
+/***************
+ * MIDDLEWARES *
+ ***************/
 app.use(bodyParser.json());
+
+/********************
+ * REESCRIBIR RUTAS *
+ ********************/
+app.use('/api', usuarios_routes);
+
 
 module.exports = app;
