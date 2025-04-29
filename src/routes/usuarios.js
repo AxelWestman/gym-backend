@@ -14,4 +14,10 @@ router.get('/getUsuarios',UsuariosController.getUsuarios);
 
 router.post('/postUsuarios', UsuariosController.postUsuarios)
 
+/****************
+ * RUTAS DELETE *
+ ****************/
+
+router.delete('/deleteUsuarios/:id',UsuariosController.deleteUsuarios);
+
 module.exports = router;
