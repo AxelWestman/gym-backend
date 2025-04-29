@@ -37,6 +37,48 @@ const controller = {
         }
     },
 
+    /******************
+    * CREAR USUARIOS *
+    ******************/
+
+    postUsuarios: async (req, res) => {
+
+        console.log(req.body);
+        datosUsuario = req.body;
+
+        const {nombre_completo, dni, mail, telefono, genero} = req.body
+
+        let connection
+
+        try{
+
+            connection = await conectsql();
+            const [result] = await connection.execute(`INSERT INTO clientes (nombre_completo, dni, mail, telefono, genero) VALUES ('${nombre_completo}', '${dni}', '${mail}', '${telefono}', '${genero}')`);
+            console.log(result);
+
+            res.json({
+                status: 'success',
+                message: 'Usuario añadido correctamente'
+            });
+
+        }
+        catch(error){
+
+            console.error('Error al añadir al usuario:', error);
+        res.status(500).json({ 
+          status: 'error', 
+          message: 'Error al añadir el usuario', 
+          error 
+            });
+        }
+        finally {
+            if (connection) {
+                connection.close();
+                console.log('Conexión cerrada');
+            }
+        }
+    }
+
 
 }
 

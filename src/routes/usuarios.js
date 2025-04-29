@@ -8,4 +8,10 @@ var router = express.Router();
 
 router.get('/getUsuarios',UsuariosController.getUsuarios);
 
+/**************
+ * RUTAS POST *
+ **************/
+
+router.post('/postUsuarios', UsuariosController.postUsuarios)
+
 module.exports = router;
