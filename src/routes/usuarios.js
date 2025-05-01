@@ -13,6 +13,7 @@ router.get('/getUsuarios',UsuariosController.getUsuarios);
  **************/
 
 router.post('/postUsuarios', UsuariosController.postUsuarios)
+router.post('/postLogueo',UsuariosController.postLoginUsuarios)
 
 /****************
  * RUTAS DELETE *

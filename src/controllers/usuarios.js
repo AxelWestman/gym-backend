@@ -68,6 +68,47 @@ const controller = {
     }
   },
 
+  /********************
+  * LOGUEAR USUARIOS *
+  ********************/
+
+  postLoginUsuarios: async (req, res) => {
+    
+    console.log(req.body);
+
+    const {mail, password} = req.body;
+
+    console.log(mail, password)
+
+    let connection;
+
+    try{
+      connection = await conectsql();
+      const [rows] = await connection.execute(
+        'SELECT nombre_completo FROM clientes WHERE mail = ? AND contraseña = ?',
+        [mail, password]
+      );
+      
+     res.json({
+      status: "success",
+      data: rows,
+    });
+  } catch (error) {
+    console.log("Error al loguear al usuario");
+    res.status(500).json({
+      status: "error",
+      message: "Error al loguear al usuario",
+      error,
+    });
+  } finally {
+    if (connection) {
+      connection.close();
+      console.log("Conexión cerrada");
+    }
+  }
+
+  },
+
   /*********************
    * ELIMINAR USUARIOS *
    *********************/
@@ -81,7 +122,8 @@ const controller = {
     try {
       connection = await conectsql();
       const [rows] = await connection.execute(
-        `DELETE FROM clientes WHERE idclientes = ${id}`
+        'DELETE FROM clientes WHERE idclientes = ?',
+        [id]
       );
       console.log(rows);
 
