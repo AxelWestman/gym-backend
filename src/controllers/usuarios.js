@@ -38,14 +38,14 @@ const controller = {
     console.log(req.body);
     datosUsuario = req.body;
 
-    const { nombre_completo, dni, mail, telefono, genero } = req.body;
+    const { nombre_completo, dni, mail, telefono, genero, contraseña } = req.body;
 
     let connection;
 
     try {
       connection = await conectsql();
       const [result] = await connection.execute(
-        `INSERT INTO clientes (nombre_completo, dni, mail, telefono, genero) VALUES ('${nombre_completo}', '${dni}', '${mail}', '${telefono}', '${genero}')`
+        `INSERT INTO clientes (nombre_completo, dni, mail, telefono, genero, contraseña) VALUES ('${nombre_completo}', '${dni}', '${mail}', '${telefono}', '${genero}', '${contraseña}')`
       );
       console.log(result);
 
