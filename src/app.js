@@ -6,6 +6,7 @@ const path = require('path');
 var app = express();
 const bodyParser = require('body-parser');
 var usuarios_routes = require('./routes/usuarios'   );
+var ejercicios_routes = require('./routes/ejercicios_y_rutinas'   );
 
 app.use(morgan('dev')) 
 
@@ -39,6 +40,7 @@ app.use(bodyParser.json());
  * REESCRIBIR RUTAS *
  ********************/
 app.use('/api', usuarios_routes);
+app.use('/api', ejercicios_routes);
 
 
 module.exports = app;
