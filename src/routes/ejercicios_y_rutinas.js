@@ -8,6 +8,7 @@ var router = express.Router();
 
 router.get('/getEjercicios', EjerciciosYrutinasController.getEjercicios);
 router.get('/getRutinas', EjerciciosYrutinasController.getRutinas);
+router.get('/getEjerciciosRutinas/:id', EjerciciosYrutinasController.getEjerciciosRutina);
 
 /**************
  * RUTAS POST *

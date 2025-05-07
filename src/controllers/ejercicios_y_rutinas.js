@@ -64,6 +64,49 @@ getRutinas: async (req, res) => {
   }
 },
 
+/************************************
+ * OBTENER EJERCICIOS DE UNA RUTINA *
+ ************************************/
+
+getEjerciciosRutina: async (req, res) => {
+  console.log(req.params);
+  const { id } = req.params;
+  let connection;
+
+  try {
+    connection = await conectsql();
+    const [rows] = await connection.execute(
+      "SELECT e.nombre_ejercicio AS ejercicio, re.series, re.repeticiones, re.descanso_segundos AS descanso, re.dia_semana AS dia, re.orden_ejercicio AS orden FROM rutina_ejercicios re JOIN ejercicios e ON re.idejercicio = e.idejercicio WHERE re.idrutina = ? ORDER BY re.dia_semana, re.orden_ejercicio;",
+      [id]
+    );
+    console.log(rows);
+
+    if(rows.length === 0) {
+      return res.status(404).json({
+        status: "error",
+        message: "No se encontraron ejercicios para la rutina con id " + id,
+      });
+    }
+
+    res.json({
+      status: "success",
+      data: rows,
+    });
+  } catch (error) {
+    console.log("Error al obtener ejercicios de la rutina");
+    res.status(500).json({
+      status: "error",
+      message: "Error al obtener ejercicios de la rutina" + error,
+      error,
+    });
+  } finally {
+    if (connection) {
+      connection.close();
+      console.log("Conexión cerrada");
+    }
+  }
+},
+
      /*********************
   * AGREGAR EJERCICIOS *
   *********************/
