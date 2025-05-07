@@ -182,7 +182,43 @@ finally {
   }
 }
 
-}
+},
+
+/*******************************
+ * AGREGAR EJERCICIOS A RUTINA *
+ *******************************/
+
+postAgregarEjerciciosArutina: async (req, res) => {
+  console.log(req.body);
+  const { idrutina, idejercicio, dia_semana, series, repeticiones, descanso_segundos, orden_ejercicio } = req.body;
+  let connection;
+
+  try {
+    connection = await conectsql();
+    const [result] = await connection.execute(
+      "INSERT INTO rutina_ejercicios (idrutina, idejercicio, dia_semana, series, repeticiones, descanso_segundos, orden_ejercicio) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      [idrutina, idejercicio, dia_semana, series, repeticiones, descanso_segundos ? descanso_segundos : null, orden_ejercicio ? orden_ejercicio : null]
+    );
+    console.log(result);
+
+    res.json({
+      status: "success",
+      data: result,
+    });
+  } catch (error) {
+    console.log("Error al agregar ejercicio a rutina");
+    res.status(500).json({
+      status: "error",
+      message: "Error al agregar ejercicio a rutina" + error,
+      error,
+    });
+  } finally {
+    if (connection) {
+      connection.close();
+      console.log("Conexión cerrada");
+    }
+  }
+},
 
 }
 

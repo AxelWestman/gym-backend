@@ -16,5 +16,6 @@ router.get('/getEjerciciosRutinas/:id', EjerciciosYrutinasController.getEjercici
 
 router.post('/postEjercicios', EjerciciosYrutinasController.postEjercicios);
 router.post('/postRutinas', EjerciciosYrutinasController.postRutinas);
+router.post('/postAgregarEjerciciosArutina', EjerciciosYrutinasController.postAgregarEjerciciosArutina);
 
 module.exports = router;
